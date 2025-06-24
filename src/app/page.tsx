@@ -1,10 +1,7 @@
+import { Button } from "@/components/ui/button";
 
 const Home = () => {
-  return (
-    <div>
-      <p>Home here</p>
-    </div>
-  );
+  return <Button className="cursor-pointer">Click me</Button>
 };
 
 export default Home
