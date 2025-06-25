@@ -1,6 +1,6 @@
 "use client"
 import { SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { Banknote, Calendar, FileUser, LayoutDashboard, UserSearch } from 'lucide-react';
+import { Banknote, Calendar, FileUser, UserSearch } from 'lucide-react';
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
@@ -8,11 +8,6 @@ import { usePathname } from 'next/navigation';
 const AppSidebarContent = () => {
 
     const items = [
-        {
-            path: '/dashboard',
-            title: 'Dashboard',
-            icon: LayoutDashboard
-        },
         {
             path: '/agendamentos',
             title: 'Agendamentos',

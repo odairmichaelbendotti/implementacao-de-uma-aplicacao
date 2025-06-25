@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Header, Page, HeaderContent, HeaderTitle, HeaderDescription, HeaderActions, PageContentScheduler } from "@/components/ui/page-container"
-import { UserRoundPlus } from 'lucide-react'
+import { Header, Page, HeaderContent, HeaderTitle, HeaderDescription, PageContentScheduler } from "@/components/ui/page-container"
 import ScheduleTable from "./_components/table";
 
 const Agendamentos = () => {
@@ -8,14 +6,9 @@ const Agendamentos = () => {
         <Page>
             <Header>
                 <HeaderContent>
-                    <HeaderTitle>Médicos</HeaderTitle>
-                    <HeaderDescription>Os médicos aparecerão aqui</HeaderDescription>
+                    <HeaderTitle>Agendamentos</HeaderTitle>
+                    <HeaderDescription>Aqui você tem acesso a todos os agendamentos da sua clínica</HeaderDescription>
                 </HeaderContent>
-                <HeaderActions>
-                    <Button className="cursor-pointer" variant="outline"><UserRoundPlus />Ordenar</Button>
-                    <Button className="cursor-pointer" variant="outline"><UserRoundPlus />Filtrar</Button>
-                    <Button className="cursor-pointer"><UserRoundPlus />Adicionar médicos</Button>
-                </HeaderActions>
             </Header>
 
             <PageContentScheduler>

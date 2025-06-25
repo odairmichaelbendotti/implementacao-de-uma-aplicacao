@@ -25,7 +25,7 @@ const SignIn = () => {
         const { } = await signIn.email({
             email: values.email,
             password: values.password,
-            callbackURL: "/dashboard"
+            callbackURL: "/agendamentos"
         }, {
             onSuccess: () => {
                 toast.success('Login realizado com sucesso')

@@ -28,11 +28,11 @@ const SignUp = () => {
             name: values.name,
             email: values.email,
             password: values.password,
-            callbackURL: "/dashboard"
+            callbackURL: "/agendamentos"
         }, {
             onSuccess: () => {
                 toast.success('Conta criada com sucesso')
-                router.push('/dashboard')
+                router.push('/agendamentos')
             },
             onError: (ctx) => {
                 if (ctx.error.code === 'USER_ALREADY_EXISTS') {

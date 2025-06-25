@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
 import { Header, HeaderActions, HeaderContent, HeaderDescription, HeaderTitle, Page, PageContent } from "@/components/ui/page-container"
-import { UserRoundPlus } from "lucide-react"
+// import { UserRoundPlus } from "lucide-react"
+// import { Button } from "@/components/ui/button"
 import AddMedic from "./_components/add-medic"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
@@ -17,10 +17,13 @@ const Medicos = async () => {
 
     if (!session?.user) redirect('/authentication')
 
+    // Verificar se o usuário possui uma clínica cadastrada
     const userHasAClinic = await getClinicByUser(session.user.id)
 
+    // Caso o usuário não possua uma clínica cadastrada, ele será direcionada para a página de cadastro de clínicas
     if (!userHasAClinic) redirect('/clinic-form')
 
+    // Aqui vamos pegar todos os médicos disponíveis no banco de dados
     const doctors = await getAllDoctorsByUserId() as Doctors[]
 
     return (
@@ -31,8 +34,8 @@ const Medicos = async () => {
                     <HeaderDescription>Os médicos aparecerão aqui</HeaderDescription>
                 </HeaderContent>
                 <HeaderActions>
-                    <Button className="cursor-pointer" variant="outline"><UserRoundPlus />Ordenar</Button>
-                    <Button className="cursor-pointer" variant="outline"><UserRoundPlus />Filtrar</Button>
+                    {/* <Button className="cursor-pointer" variant="outline"><UserRoundPlus />Ordenar</Button>
+                    <Button className="cursor-pointer" variant="outline"><UserRoundPlus />Filtrar</Button> */}
                     <AddMedic title='Adicionar médico' />
                 </HeaderActions>
             </Header>

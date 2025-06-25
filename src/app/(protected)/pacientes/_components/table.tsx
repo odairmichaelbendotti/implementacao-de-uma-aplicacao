@@ -13,7 +13,7 @@ import React from 'react';
 import AddSchedule from "./add-schedule";
 import { redirect } from "next/navigation";
 import { Patients } from "@/generated/prisma";
-import { ListCheck } from "lucide-react";
+// import { ListCheck } from "lucide-react";
 
 const PatientTable = async () => {
     const patients = await getAllPatients() as Patients[]
@@ -25,10 +25,10 @@ const PatientTable = async () => {
             <TableHeader>
                 <TableRow>
                     <TableHead className="text-left">Paciente</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="text-center">E-mail</TableHead>
-                    <TableHead className="text-center">WhatsApp</TableHead>
-                    <TableHead className="text-center">Agendamentos</TableHead>
+                    <TableHead className="text-center hidden md:table-cell">Status</TableHead>
+                    <TableHead className="text-center hidden md:table-cell">E-mail</TableHead>
+                    <TableHead className="text-center hidden md:table-cell">WhatsApp</TableHead>
+                    {/* <TableHead className="text-center">Agendamentos</TableHead> */}
                     <TableHead className="text-center">Agendar</TableHead>
                 </TableRow>
             </TableHeader>
@@ -36,15 +36,13 @@ const PatientTable = async () => {
                 {patients.map(patient => (
                     <TableRow className="text-center" key={patient.id}>
                         <TableCell className="font-medium text-left max-w-26">{patient.name}</TableCell>
-                        <TableCell className="text-center">Ativo</TableCell>
-                        <TableCell className="text-center">{patient.email}</TableCell>
-                        <TableCell className="text-center">{patient.phoneNumber}</TableCell>
-                        <TableCell className="flex justify-center cursor-pointer"><div className="flex items-center justify-center"><ListCheck /></div></TableCell>
-                        <TableCell className="flex justify-center cursor-pointer"><div className="flex items-center justify-center"><AddSchedule /></div></TableCell>
+                        <TableCell className="text-center hidden md:table-cell">Ativo</TableCell>
+                        <TableCell className="text-center hidden md:table-cell">{patient.email}</TableCell>
+                        <TableCell className="text-center hidden md:table-cell">{patient.phoneNumber}</TableCell>
+                        {/* <TableCell><div className="flex justify-center cursor-pointer"><ListCheck /></div></TableCell> */}
+                        <TableCell><div className="flex justify-center cursor-pointer"><AddSchedule /></div></TableCell>
                     </TableRow>
                 ))}
-
-
             </TableBody>
         </Table >
     );

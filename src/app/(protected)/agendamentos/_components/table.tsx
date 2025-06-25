@@ -25,7 +25,7 @@ const ScheduleTable = () => {
                     <TableHead className="text-center">Especialidade</TableHead>
                     <TableHead className="text-center">Valor</TableHead>
                     <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="text-center">Compartilhar</TableHead>
+                    <TableHead className="text-center">Lembrar cliente</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
