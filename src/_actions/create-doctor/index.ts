@@ -25,7 +25,7 @@ export const addNewDoctor = async (data: AddMedicFormData) => {
         const doctor = await prisma.doctors.create({
             data: {
                 ...result.data,
-                clinic: {
+                clinics: {
                     connect: { id: clinicId }
                 }
             }

@@ -47,11 +47,14 @@ const AddMedic = ({ title }: Props) => {
             appointmentPriceDents: values.appointmentPriceDents,
         }
 
+        console.log(form.getValues())
+
         try {
             const doctor = await addNewDoctor(doctorData);
 
             if (!doctor) {
                 toast.error('Erro ao cadastrar médico');
+                console.log(doctor)
                 return;
             }
 
