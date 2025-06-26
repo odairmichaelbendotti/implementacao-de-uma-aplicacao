@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String    @id @default(uuid())
   name          String    @db.Text
   email         String    @unique
   age           Int?
@@ -20,7 +20,7 @@ model User {
   clinicId      String?
   accounts      Account[]
   sessions      Session[]
-  clinic        clinics?  @relation(fields: [clinicId], references: [id])
+  clinic        Clinics?  @relation(fields: [clinicId], references: [id])
 
   @@index([clinicId], map: "user_clinicId_fkey")
   @@map("user")
@@ -72,34 +72,35 @@ model Verification {
   @@map("verification")
 }
 
-model appointments {
-  id        String   @id
+model Appointments {
+  id        String   @id @default(uuid())
   date      DateTime
   patientId String
   doctorId  String
+  especialidade String
   clinicId  String
   horario   String
-  clinics   clinics  @relation(fields: [clinicId], references: [id], onDelete: Cascade, map: "Appointments_clinicId_fkey")
-  doctors   doctors  @relation(fields: [doctorId], references: [id], onDelete: Cascade, map: "Appointments_doctorId_fkey")
-  patients  patients @relation(fields: [patientId], references: [id], onDelete: Cascade, map: "Appointments_patientId_fkey")
+  clinics   Clinics  @relation(fields: [clinicId], references: [id], onDelete: Cascade, map: "Appointments_clinicId_fkey")
+  doctors   Doctors  @relation(fields: [doctorId], references: [id], onDelete: Cascade, map: "Appointments_doctorId_fkey")
+  patients  Patients @relation(fields: [patientId], references: [id], onDelete: Cascade, map: "Appointments_patientId_fkey")
 
   @@index([clinicId], map: "Appointments_clinicId_fkey")
   @@index([doctorId], map: "Appointments_doctorId_fkey")
   @@index([patientId], map: "Appointments_patientId_fkey")
 }
 
-model clinics {
-  id           String         @id
+model Clinics {
+  id           String         @id @default(uuid())
   name         String
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @default(now())
-  appointments appointments[]
-  doctors      doctors[]
+  appointments Appointments[]
+  doctors      Doctors[]
   users        User[]
 }
 
-model doctors {
-  id                    String         @id
+model Doctors {
+  id                    String         @id @default(uuid())
   name                  String
   avatarImg             String?
   speciality            String
@@ -111,21 +112,21 @@ model doctors {
   createdAt             DateTime       @default(now())
   updatedAt             DateTime       @default(now())
   clinicId              String
-  appointments          appointments[]
-  clinics               clinics        @relation(fields: [clinicId], references: [id], map: "Doctors_clinicId_fkey")
+  appointments          Appointments[]
+  clinics               Clinics        @relation(fields: [clinicId], references: [id], map: "Doctors_clinicId_fkey")
 
   @@index([clinicId], map: "Doctors_clinicId_fkey")
 }
 
-model patients {
-  id           String          @id
+model Patients {
+  id           String          @id @default(uuid())
   name         String
   email        String          @unique(map: "Patients_email_key")
   phoneNumber  String          @unique(map: "Patients_phoneNumber_key")
   gender       patients_gender
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @default(now())
-  appointments appointments[]
+  appointments Appointments[]
 }
 
 enum patients_gender {

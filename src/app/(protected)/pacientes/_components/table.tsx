@@ -7,7 +7,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { getAllPatients } from "../_actions/get-all-patients";
+import { getAllPatients } from "../_actions/get-all-patients"
 
 import React from 'react';
 import AddSchedule from "./add-schedule";
@@ -40,7 +40,7 @@ const PatientTable = async () => {
                         <TableCell className="text-center hidden md:table-cell">{patient.email}</TableCell>
                         <TableCell className="text-center hidden md:table-cell">{patient.phoneNumber}</TableCell>
                         {/* <TableCell><div className="flex justify-center cursor-pointer"><ListCheck /></div></TableCell> */}
-                        <TableCell><div className="flex justify-center cursor-pointer"><AddSchedule /></div></TableCell>
+                        <TableCell><div className="flex justify-center cursor-pointer"><AddSchedule patientId={patient.id} /></div></TableCell>
                     </TableRow>
                 ))}
             </TableBody>

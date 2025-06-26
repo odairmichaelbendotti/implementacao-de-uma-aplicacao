@@ -1,5 +1,5 @@
 "use client"
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { FormSchema, PatientFormSchema } from '../schema/form-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,18 +15,39 @@ import { CalendarIcon } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import { format } from "date-fns"
 import { getFreeTimesFromAppointments } from '@/_actions/get-hours-by-appointments'
+import { getPatientById } from '@/_actions/get-patient-name-by-id'
+import { getClinicByUser } from '@/_actions/clinic-by-user-id'
+import { Clinics } from '@/generated/prisma'
+import { Patients } from '@/generated/prisma'
+import { newAppointment } from '@/_actions/add-new-appointment'
+import { toast } from 'sonner'
 
-const ScheduleForm = () => {
+const ScheduleForm = ({ patientId }: { patientId: string }) => {
     const [speciality, setSpeciality] = useState<string[]>([])
     const [doctors, setDoctors] = useState<Doctors[]>([])
     const [freeSlots, setFreeSlots] = useState<string[]>([])
+    const [patient, setPatient] = useState<Patients>({
+        name: '',
+        id: '',
+        email: '',
+        phoneNumber: '',
+        gender: 'MASC',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    })
+    const [clinic, setClinic] = useState<Clinics>({
+        name: '',
+        id: '',
+        createdAt: new Date(),
+        updatedAt: new Date()
+    })
 
     const form = useForm<PatientFormSchema>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             especialidade: '',
-            doutor: '',
-            data: undefined,
+            doctorId: '',
+            date: undefined,
             horario: ''
         },
         mode: "onChange"
@@ -34,9 +55,28 @@ const ScheduleForm = () => {
 
     console.log(form.formState.errors)
 
-    const onSubmit = (data: PatientFormSchema) => {
-        alert('submit realizado com sucesso')
-        console.log(data)
+    const onSubmit = async (data: PatientFormSchema) => {
+        try {
+            const appointment = await newAppointment({
+                data: {
+                    date: data.date,
+                    patientId: patient.id,
+                    doctorId: data.doctorId,
+                    especialidade: data.especialidade,
+                    clinicId: clinic.id,
+                    horario: data.horario
+                }
+            })
+
+            if (appointment) {
+                toast.success("Consulta adicionada com sucesso")
+            } else {
+                toast.error("Erro ao adicionar consulta")
+                return
+            }
+        } catch (error) {
+            throw error
+        }
     }
 
     console.log(form.getValues("horario"))
@@ -48,11 +88,29 @@ const ScheduleForm = () => {
             setSpeciality(specialities)
         }
         getDoctorsSpeciality()
-    }, [])
+
+        const getPatient = async () => {
+            const patient = await getPatientById(patientId)
+            if (!patient) return
+            setPatient(patient)
+        }
+        getPatient()
+
+        const getClinicId = async () => {
+            const id = await getClinicByUser()
+            if (!id || 'error' in id) return
+            setClinic(id)
+        }
+        getClinicId()
+    }, [patientId, clinic.id])
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
+                <FormDescription className='mt-2'>
+                    <span className='font-bold'>Paciente</span>: {patient.name} <br />
+                    <span className='font-bold'>Clínica</span>: {clinic.name}
+                </FormDescription>
 
                 <div className='w-full flex flex-col gap-2 mt-3'>
                     <FormField
@@ -81,7 +139,7 @@ const ScheduleForm = () => {
 
                     <FormField
                         control={form.control}
-                        name="doutor"
+                        name="doctorId"
                         render={({ field }) => (
                             <FormItem>
                                 <Select onValueChange={async (value) => {
@@ -101,14 +159,13 @@ const ScheduleForm = () => {
                         )}
                     />
 
-
                     <FormField
                         control={form.control}
-                        name="data"
+                        name="date"
                         render={({ field }) => (
                             <FormItem className="flex flex-col">
                                 <Popover>
-                                    <PopoverTrigger asChild disabled={!form.getValues("doutor")}>
+                                    <PopoverTrigger asChild disabled={!form.getValues("doctorId")}>
                                         <FormControl>
                                             <Button
                                                 variant={"outline"}
@@ -133,7 +190,7 @@ const ScheduleForm = () => {
                                             onSelect={async (value) => {
                                                 field.onChange(value)
 
-                                                const values = await getFreeTimesFromAppointments(form.getValues("doutor"), value || new Date())
+                                                const values = await getFreeTimesFromAppointments(form.getValues("doctorId"), value || new Date())
 
                                                 if (!values) return
 

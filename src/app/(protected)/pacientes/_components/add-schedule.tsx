@@ -3,8 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { CalendarCheck } from 'lucide-react'
 import ScheduleForm from './schedule-form';
 
-const AddSchedule = async () => {
-
+const AddSchedule = async ({ patientId }: { patientId: string }) => {
     return (
         <Dialog>
             <DialogTrigger asChild><CalendarCheck size={18} className='cursor-pointer' /></DialogTrigger>
@@ -12,7 +11,7 @@ const AddSchedule = async () => {
                 <DialogHeader>
                     <DialogTitle>Agendar consulta</DialogTitle>
 
-                    <ScheduleForm />
+                    <ScheduleForm patientId={patientId} />
 
                 </DialogHeader>
             </DialogContent>

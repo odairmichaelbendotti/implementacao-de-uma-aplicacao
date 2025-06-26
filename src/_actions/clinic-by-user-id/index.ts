@@ -1,3 +1,4 @@
+"use server"
 import { prisma } from "@/db/db"
 import { Clinics } from "@/generated/prisma"
 import { auth } from "@/lib/auth"
@@ -5,7 +6,7 @@ import { headers } from "next/headers"
 
 // CASO O ID NÃO SEJA FORNECIDO NO PARÂMETRO, SERÁ FEITA UMA BUSCA PELO BACKEND
 
-export const getClinicByUser = async (userId: string): Promise<Clinics | { error: string }> => {
+export const getClinicByUser = async (userId?: string): Promise<Clinics | { error: string }> => {
     try {
         if (!userId) {
             const session = await auth.api.getSession({
