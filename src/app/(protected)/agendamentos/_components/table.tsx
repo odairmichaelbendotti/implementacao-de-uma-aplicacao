@@ -41,7 +41,7 @@ const ScheduleTable = async () => {
 
     return (
         <Table className="text-xs">
-            <TableCaption>Lista de agendamentos</TableCaption>
+            {appointments?.length === 0 && <TableCaption className="py-2">Você não possui agendamentos</TableCaption>}
             <TableHeader>
                 <TableRow>
                     <TableHead className="text-left">Paciente</TableHead>

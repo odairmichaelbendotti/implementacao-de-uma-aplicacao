@@ -41,7 +41,7 @@ const UserClinic = () => {
         const response = await createClinic(values.name)
         if (response?.success) {
             toast.success('Clínica cadastrada com sucesso')
-            router.push("/dashboard")
+            router.push("/pacientes")
         } else {
             toast.error('Erro ao cadastrar clínica')
         }

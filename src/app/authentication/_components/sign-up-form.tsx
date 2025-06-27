@@ -32,7 +32,7 @@ const SignUp = () => {
         }, {
             onSuccess: () => {
                 toast.success('Conta criada com sucesso')
-                router.push('/agendamentos')
+                router.push('/clinic-form')
             },
             onError: (ctx) => {
                 if (ctx.error.code === 'USER_ALREADY_EXISTS') {

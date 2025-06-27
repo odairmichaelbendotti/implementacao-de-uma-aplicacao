@@ -17,7 +17,7 @@ model User {
   image         String?   @db.Text
   createdAt     DateTime
   updatedAt     DateTime
-  clinicId      String?
+  clinicId      String? @default(cuid())
   accounts      Account[]
   sessions      Session[]
   clinic        Clinics?  @relation(fields: [clinicId], references: [id])
@@ -123,14 +123,14 @@ model Patients {
   name         String
   email        String          @unique(map: "Patients_email_key")
   phoneNumber  String          @unique(map: "Patients_phoneNumber_key")
-  gender       patients_gender
+  gender       String
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @default(now())
   appointments Appointments[]
 }
 
-enum patients_gender {
-  FEM
-  MASC
-  OUTRO
-}
+// enum patients_gender {
+//   FEM
+//   MASC
+//   OUTRO
+// }

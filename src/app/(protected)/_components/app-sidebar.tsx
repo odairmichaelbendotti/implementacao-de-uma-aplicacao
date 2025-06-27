@@ -22,13 +22,13 @@ const AppSidebar = ({ user, clinic }: AppSidebarProps) => {
 
     if ('error' in clinic) return
 
-        return (
-            <Sidebar>
-                <SidebarHeader />
-                <AppSidebarContent />
-                <AppSidebarFooter user={user} clinic={clinic} />
-            </Sidebar>
-        );
+    return (
+        <Sidebar>
+            <SidebarHeader />
+            <AppSidebarContent />
+            <AppSidebarFooter user={user} clinic={clinic} />
+        </Sidebar>
+    );
 };
 
 export default AppSidebar;
