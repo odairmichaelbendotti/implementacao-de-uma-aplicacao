@@ -80,6 +80,7 @@ model Appointments {
   especialidade String
   clinicId  String
   horario   String
+  createdAt     DateTime @default(now())
   clinics   Clinics  @relation(fields: [clinicId], references: [id], onDelete: Cascade, map: "Appointments_clinicId_fkey")
   doctors   Doctors  @relation(fields: [doctorId], references: [id], onDelete: Cascade, map: "Appointments_doctorId_fkey")
   patients  Patients @relation(fields: [patientId], references: [id], onDelete: Cascade, map: "Appointments_patientId_fkey")
